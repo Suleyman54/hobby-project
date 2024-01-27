@@ -33,7 +33,7 @@ public class PersonController {
         personService.deletePerson(id);
     }
 
-    @PutMapping("/updatePerson")
+    @PutMapping("/updatePerson/{id}")
     public void updatePerson(@RequestBody Person person){
         personService.updatePerson(person);
     }

@@ -20,4 +20,8 @@ public class Person{
     private String name;
     private int age;
     private int balance;
+
+    public void setName(String name) {
+        this.name = name.toUpperCase().charAt(0) + name.substring(1);
+    }
 }
