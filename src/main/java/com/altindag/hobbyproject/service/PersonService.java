@@ -1,6 +1,8 @@
 package com.altindag.hobbyproject.service;
 
 import com.altindag.hobbyproject.domain.Person;
+import com.altindag.hobbyproject.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +11,9 @@ import java.util.List;
 public class PersonService {
 
     private List<Person> people;
+
+    @Autowired
+    PersonRepository personRepository;
 
     public PersonService(List<Person> people) {
         this.people = people;
@@ -19,7 +24,8 @@ public class PersonService {
     }
 
     public void addPerson(Person person) {
-        people.add(person);
+        personRepository.save(person);
+//        people.add(person);
     }
 
     public void deletePerson(Long id){
