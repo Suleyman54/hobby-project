@@ -2,6 +2,7 @@ package com.altindag.hobbyproject.service;
 
 import com.altindag.hobbyproject.domain.Person;
 import com.altindag.hobbyproject.repository.PersonRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class PersonService {
 
+    @Getter
     private List<Person> people;
 
     @Autowired
@@ -19,20 +21,17 @@ public class PersonService {
         this.people = people;
     }
 
-    public List<Person> getPeople() {
-        return people;
-    }
-
     public void addPerson(Person person) {
         personRepository.save(person);
-//        people.add(person);
     }
 
     public void deletePerson(Long id){
-        people.removeIf(x -> x.getId().equals(id));
+        personRepository.deleteById(id);
     }
 
     public void updatePerson(Person person){
+
+        personRepository.findById(person.getId());
         int idx = 0;
         Long id = 0L;
 
