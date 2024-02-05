@@ -2,10 +2,12 @@ package com.altindag.hobbyproject.service;
 
 import com.altindag.hobbyproject.domain.Person;
 import com.altindag.hobbyproject.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,10 +27,6 @@ public class PersonService {
     }
 
     public void addPerson(Person person) {
-        Optional<Person> idOptional = personRepository.findById(person.getId());
-        if (idOptional.isPresent()){
-            throw new IllegalStateException("id taken");
-        }
         personRepository.save(person);
     }
 
@@ -39,24 +37,12 @@ public class PersonService {
         }
         personRepository.deleteById(id);
     }
-
-    public void updatePerson(Person person){
-        int idx = 0;
-        Long id = 0L;
-
-        for (int i =0; i<people.size(); i++){
-            if (people.get((i)).getId().equals(person.getId())){
-                id = person.getId();
-                idx = i;
-                break;
-            }
-        }
-        Person person1 = new Person();
-        person1.setId(id);
-        person1.setName(person.getName());
-        person1.setAge(person.getAge());
-        person1.setBalance(person.getBalance());
-
-        people.set(idx, person1);
+    @Transactional
+    public void updatePerson(Long id, Long balance) {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        String.format("Person with id: %s does not exist", id)));
+        person.setBalance(balance);
+        personRepository.save(person);
     }
 }
