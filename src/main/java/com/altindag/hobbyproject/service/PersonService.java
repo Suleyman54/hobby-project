@@ -33,15 +33,18 @@ public class PersonService {
     public void deletePerson(Long id){
         boolean present = personRepository.existsById(id);
         if(!present){
-            throw new IllegalStateException(String.format("Person with id: %s does not exists", id));
+            throw new IllegalStateException(String
+                    .format("Person with id: %s does not exists", id));
         }
         personRepository.deleteById(id);
     }
     @Transactional
     public void updatePerson(Long id, Long balance) {
-        Person person = personRepository.findById(id)
+        Person person = personRepository
+                .findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Person with id: %s does not exist", id)));
+
         person.setBalance(balance);
         personRepository.save(person);
     }
