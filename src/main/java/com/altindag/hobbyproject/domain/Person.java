@@ -1,12 +1,5 @@
 package com.altindag.hobbyproject.domain;
 
-
-//import jakarta.persistence.Column;
-//import jakarta.persistence.SequenceGenerator;
-//
-//import static jakarta.persistence.GenerationType.SEQUENCE;
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

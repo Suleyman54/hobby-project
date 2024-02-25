@@ -20,4 +20,8 @@ public class Product{
     private String name;
     private int price;
 
+    public void setName(String name) {
+        this.name = name.toUpperCase().charAt(0) + name.substring(1);
+    }
+
 }
