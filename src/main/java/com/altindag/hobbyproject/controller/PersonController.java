@@ -5,6 +5,7 @@ import com.altindag.hobbyproject.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class PersonController {
     @PutMapping("/updatePerson/{id}")
     public void updatePerson(
             @PathVariable Long id,
-            @RequestParam(required = false) Long balance){
+            @RequestParam(required = false) BigDecimal balance){
         personService.updatePerson(id, balance);
     }
 }

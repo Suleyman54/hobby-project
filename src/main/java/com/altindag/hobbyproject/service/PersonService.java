@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class PersonService {
         personRepository.deleteById(id);
     }
     @Transactional
-    public void updatePerson(Long id, Long balance) {
+    public void updatePerson(Long id, BigDecimal balance) {
         Person person = personRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException(

@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -23,12 +24,12 @@ public class ProductService {
     }
 
     public void addProduct(Product product) {
-//        Long id = product.getId();
-//        boolean present = productRepository.existsById(id);
-//        if (present){
-//            throw new IllegalStateException(String
-//                    .format("Product with this id: %s already exists", id));
-//        }
+        Long id = product.getId();
+        boolean present = productRepository.existsById(id);
+        if (present){
+            throw new IllegalStateException(String
+                    .format("Product with this id: %s already exists", id));
+        }
         productRepository.save(product);
     }
 
@@ -43,7 +44,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(Long id, int price) {
+    public void updateProduct(Long id, BigDecimal price) {
         Product product = productRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException(

@@ -5,6 +5,7 @@ import com.altindag.hobbyproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class ProductController {
     @PutMapping("/updateProduct/{id}")
     public void updateProduct(
             @PathVariable Long id,
-            @RequestParam(required = false) int price){
+            @RequestParam(required = false) BigDecimal price){
         productService.updateProduct(id, price);
     }
 }
