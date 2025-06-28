@@ -1,9 +1,9 @@
 package com.altindag.hobbyproject.domain;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "products")
-public class Product{
+public class Product {
 
     @Id
     private String id;
@@ -23,7 +23,8 @@ public class Product{
     public void setName(String name) {
         this.name = name.toUpperCase().charAt(0) + name.substring(1);
     }
-    public void setPrice(BigDecimal price){
+
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

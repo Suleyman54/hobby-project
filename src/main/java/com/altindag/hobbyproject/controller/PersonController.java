@@ -13,29 +13,29 @@ public class PersonController {
 
     private final PersonService personService;
 
-    public PersonController(PersonService personService){
+    public PersonController(PersonService personService) {
         this.personService = personService;
     }
 
     @GetMapping
-    public List<PersonDto> getPeople(){
+    public List<PersonDto> getPeople() {
         return personService.getPeople();
     }
 
     @PostMapping("/addPerson")
-    public void addPerson(@RequestBody PersonDto personDto){
+    public void addPerson(@RequestBody PersonDto personDto) {
         personService.addPerson(personDto);
     }
 
     @DeleteMapping("/deletePerson/{id}")
-    public void deletePerson(@PathVariable String id){
+    public void deletePerson(@PathVariable String id) {
         personService.deletePerson(id);
     }
 
     @PutMapping("/updatePerson/{id}")
-    public ResponseEntity<PersonDto>updatePerson(
+    public ResponseEntity<PersonDto> updatePerson(
             @PathVariable String id,
-            @RequestBody PersonDto dto){
+            @RequestBody PersonDto dto) {
         PersonDto updatedPerson = personService.updatePerson(id, dto);
         return ResponseEntity.ok(updatedPerson);
     }
