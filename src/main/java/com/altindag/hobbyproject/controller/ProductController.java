@@ -1,43 +1,43 @@
 package com.altindag.hobbyproject.controller;
 
-import com.altindag.hobbyproject.domain.Product;
+import com.altindag.hobbyproject.dto.PersonDto;
+import com.altindag.hobbyproject.dto.ProductDto;
 import com.altindag.hobbyproject.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/product")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
-    @Autowired
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping()
-    public List<Product> getProducts(){
+    public List<ProductDto> getProducts(){
         return productService.getProducts();
     }
 
     @PostMapping("/addProduct")
-    public void addProduct(@RequestBody Product product){
-        productService.addProduct(product);
+    public void addProduct(@RequestBody ProductDto productDto){
+        productService.addProduct(productDto);
     }
 
     @DeleteMapping("/deleteProduct/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public void deleteProduct(@PathVariable String id){
         productService.deleteProduct(id);
     }
 
     @PutMapping("/updateProduct/{id}")
-    public void updateProduct(
-            @PathVariable Long id,
-            @RequestParam(required = false) BigDecimal price){
-        productService.updateProduct(id, price);
+    public ResponseEntity<ProductDto> updateProduct(
+            @PathVariable String id,
+            @RequestBody ProductDto productDto){
+        ProductDto updateProduct = productService.updateProduct(id, productDto);
+        return ResponseEntity.ok(updateProduct);
     }
 }

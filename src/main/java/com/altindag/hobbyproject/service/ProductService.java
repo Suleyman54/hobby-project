@@ -1,6 +1,8 @@
 package com.altindag.hobbyproject.service;
 
 import com.altindag.hobbyproject.domain.Product;
+import com.altindag.hobbyproject.dto.ProductDto;
+import com.altindag.hobbyproject.mapper.ProductMapper;
 import com.altindag.hobbyproject.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,46 +13,44 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private List<Product> products;
-    @Autowired
-    ProductRepository productRepository;
 
-    public ProductService(List<Product> products){
-        this.products = products;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper){
+        this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<ProductDto> getProducts() {
+        return productRepository.findAll().stream()
+                .map(productMapper::mapToProductDto)
+                .toList();
     }
 
-    public void addProduct(Product product) {
-        Long id = product.getId();
-        boolean present = productRepository.existsById(id);
-        if (present){
-            throw new IllegalStateException(String
-                    .format("Product with this id: %s already exists", id));
-        }
-        productRepository.save(product);
+    public ProductDto addProduct(ProductDto productDto) {
+        Product product = productMapper.mapToProduct(productDto);
+        product = productRepository.save(product);
+        return productMapper.mapToProductDto(product);
     }
 
 
-    public void deleteProduct(Long id) {
-        boolean present = productRepository.existsById(id);
-        if (!present){
+    public void deleteProduct(String id) {
+        if (productRepository.existsById(id)){
             throw new IllegalStateException(String.
                     format("Product with this id: %s does not exists", id));
         }
         productRepository.deleteById(id);
     }
 
-    @Transactional
-    public void updateProduct(Long id, BigDecimal price) {
+    public ProductDto updateProduct(String id, ProductDto productDto) {
         Product product = productRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Product with id: %s does not exist", id)));
 
-        product.setPrice(price);
-        productRepository.save(product);
+        product.setPrice(productDto.price());
+
+        return productMapper.mapToProductDto(productRepository.save(product));
     }
 }

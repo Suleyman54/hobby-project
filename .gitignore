@@ -18,7 +18,18 @@ target/
 *.iws
 *.iml
 *.ipr
+# Java
+*.class
+*.jar
+*.war
+*.ear
 
+# Spring Boot config
+application.properties
+
+# IDE files
+*.iml
+.idea/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

@@ -5,17 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Document(collection = "persons")
 public class Person{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String name;
     private String lastname;
     private String email;
@@ -24,5 +24,9 @@ public class Person{
 
     public void setName(String name) {
         this.name = name.toUpperCase().charAt(0) + name.substring(1);
+    }
+
+    public void setBalance(BigDecimal balance){
+        this.balance = balance;
     }
 }

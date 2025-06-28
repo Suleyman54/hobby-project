@@ -1,52 +1,53 @@
 package com.altindag.hobbyproject.service;
 
 import com.altindag.hobbyproject.domain.Person;
+import com.altindag.hobbyproject.dto.PersonDto;
+import com.altindag.hobbyproject.mapper.PersonMapper;
 import com.altindag.hobbyproject.repository.PersonRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class PersonService {
 
-    private List<Person> people;
+    private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
 
-    @Autowired
-    PersonRepository personRepository;
-
-    public PersonService(List<Person> people) {
-        this.people = people;
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper) {
+        this.personRepository = personRepository;
+        this.personMapper = personMapper;
     }
 
-    public List<Person> getPeople() {
-        return personRepository.findAll();
+    public List<PersonDto> getPeople() {
+        return personRepository.findAll().stream()
+                .map(personMapper::mapToPersonDto)
+                .toList();
     }
 
-    public void addPerson(Person person) {
-        personRepository.save(person);
+    public PersonDto addPerson(PersonDto personDto) {
+        Person person = personMapper.mapToPerson(personDto);
+        person = personRepository.save(person);
+        return personMapper.mapToPersonDto(person);
     }
 
-    public void deletePerson(Long id){
-        boolean present = personRepository.existsById(id);
-        if(!present){
+    public void deletePerson(String id) {
+        if (!personRepository.existsById(id)) {
             throw new IllegalStateException(String
                     .format("Person with id: %s does not exists", id));
         }
         personRepository.deleteById(id);
     }
-    @Transactional
-    public void updatePerson(Long id, BigDecimal balance) {
-        Person person = personRepository
+
+    public PersonDto updatePerson(String id, PersonDto dto) {
+        Person existingPerson = personRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Person with id: %s does not exist", id)));
 
-        person.setBalance(balance);
-        personRepository.save(person);
+        existingPerson.setName(dto.name());
+        existingPerson.setBalance(dto.balance());
+
+        return personMapper.mapToPersonDto(personRepository.save(existingPerson));
     }
 }
