@@ -23,7 +23,4 @@ public class Person {
     private int age;
     private BigDecimal balance;
 
-    public void setName(String name) {
-        this.name = name.toUpperCase().charAt(0) + name.substring(1);
-    }
 }

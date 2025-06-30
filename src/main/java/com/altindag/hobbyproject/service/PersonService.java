@@ -26,6 +26,11 @@ public class PersonService {
     }
 
     public PersonDto addPerson(PersonDto personDto) {
+        if (personDto.getName() != null && !personDto.getName().isEmpty()) {
+            String normalized = personDto.getName().substring(0, 1).toUpperCase() +
+                    personDto.getName().substring(1).toLowerCase();
+            personDto.setName(normalized);
+        }
         Person person = personMapper.mapToPerson(personDto);
         person = personRepository.save(person);
         return personMapper.mapToPersonDto(person);
