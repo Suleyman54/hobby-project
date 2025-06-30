@@ -1,15 +1,15 @@
 package com.altindag.hobbyproject.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "persons")
@@ -25,9 +25,5 @@ public class Person {
 
     public void setName(String name) {
         this.name = name.toUpperCase().charAt(0) + name.substring(1);
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
     }
 }

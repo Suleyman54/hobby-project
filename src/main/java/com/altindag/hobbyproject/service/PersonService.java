@@ -44,10 +44,9 @@ public class PersonService {
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Person with id: %s does not exist", id)));
-
-        existingPerson.setName(dto.name());
-        existingPerson.setBalance(dto.balance());
-
+        existingPerson.setName(dto.getName());
+        existingPerson.setAge(dto.getAge());
+        existingPerson.setBalance(dto.getBalance());
         return personMapper.mapToPersonDto(personRepository.save(existingPerson));
     }
 }

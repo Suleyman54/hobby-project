@@ -2,6 +2,7 @@ package com.altindag.hobbyproject.controller;
 
 import com.altindag.hobbyproject.dto.PersonDto;
 import com.altindag.hobbyproject.service.PersonService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,9 @@ public class PersonController {
     }
 
     @PostMapping("/addPerson")
-    public void addPerson(@RequestBody PersonDto personDto) {
-        personService.addPerson(personDto);
+    public ResponseEntity<PersonDto> addPerson(@RequestBody PersonDto personDto) {
+        PersonDto created = personService.addPerson(personDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @DeleteMapping("/deletePerson/{id}")

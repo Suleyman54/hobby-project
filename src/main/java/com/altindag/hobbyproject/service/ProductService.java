@@ -46,7 +46,7 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalStateException(
                         String.format("Product with id: %s does not exist", id)));
 
-        product.setPrice(productDto.price());
+        product.setPrice(productDto.getPrice());
 
         return productMapper.mapToProductDto(productRepository.save(product));
     }
