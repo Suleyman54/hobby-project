@@ -1,5 +1,7 @@
 package com.altindag.hobbyproject.domain;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import org.springframework.data.annotation.Id;
@@ -17,9 +19,13 @@ public class Person {
 
     @Id
     private String id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String lastname;
+    @NotBlank
     private String email;
+    @Min(14)
     private int age;
     private BigDecimal balance;
 

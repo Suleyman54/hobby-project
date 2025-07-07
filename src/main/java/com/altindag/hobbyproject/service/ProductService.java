@@ -4,6 +4,7 @@ import com.altindag.hobbyproject.domain.Product;
 import com.altindag.hobbyproject.dto.ProductDto;
 import com.altindag.hobbyproject.mapper.ProductMapper;
 import com.altindag.hobbyproject.repository.ProductRepository;
+import com.altindag.hobbyproject.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ProductService {
     }
 
     public ProductDto addProduct(ProductDto productDto) {
+        productDto.setName(StringUtils.capitalizeFirstLetter(productDto.getName()));
         Product product = productMapper.mapToProduct(productDto);
         product = productRepository.save(product);
         return productMapper.mapToProductDto(product);

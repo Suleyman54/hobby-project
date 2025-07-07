@@ -4,6 +4,7 @@ import com.altindag.hobbyproject.domain.Person;
 import com.altindag.hobbyproject.dto.PersonDto;
 import com.altindag.hobbyproject.mapper.PersonMapper;
 import com.altindag.hobbyproject.repository.PersonRepository;
+import com.altindag.hobbyproject.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,13 +27,10 @@ public class PersonService {
     }
 
     public PersonDto addPerson(PersonDto personDto) {
-        if (personDto.getName() != null && !personDto.getName().isEmpty()) {
-            String normalized = personDto.getName().substring(0, 1).toUpperCase() +
-                    personDto.getName().substring(1).toLowerCase();
-            personDto.setName(normalized);
-        }
+        personDto.setName(StringUtils.capitalizeFirstLetter(personDto.getName()));
         Person person = personMapper.mapToPerson(personDto);
         person = personRepository.save(person);
+
         return personMapper.mapToPersonDto(person);
     }
 

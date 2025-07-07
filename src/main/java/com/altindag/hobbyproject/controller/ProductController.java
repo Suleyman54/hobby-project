@@ -2,6 +2,7 @@ package com.altindag.hobbyproject.controller;
 
 import com.altindag.hobbyproject.dto.ProductDto;
 import com.altindag.hobbyproject.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public void addProduct(@RequestBody ProductDto productDto) {
+    public void addProduct(@Valid @RequestBody ProductDto productDto) {
         productService.addProduct(productDto);
     }
 

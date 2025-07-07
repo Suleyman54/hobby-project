@@ -1,5 +1,6 @@
 package com.altindag.hobbyproject.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDto {
+
+    @NotBlank
     private String name;
     private int quantity;
     private BigDecimal price;
